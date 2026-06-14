@@ -197,7 +197,7 @@ const BuildCardDOM = () => {
    /* front */
    var face = document.createElement("div");
    face.className = "card-face";
-   face.style.backgroundImage =`url(../assets/cards/${card.colour}/${card.design}.svg)`;
+   face.style.backgroundImage =`url(./../assets/cards/${card.colour}/${card.design}.svg)`;
 
    /* back */
    var back = document.createElement("div");
