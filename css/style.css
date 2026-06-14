@@ -1,0 +1,215 @@
+:root {
+  --bg1: #1a1a2e;
+  --bg2: #0f0f1e;
+  --box-front: #1b7de7;
+  --box-side: #1b7de7;
+  --box-top: #1b7de7;
+  --shadow: 2.87px 2.87px 17.796px 0 rgba(0, 0, 0, 0.13);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #f9f9f9;
+  background: radial-gradient(
+    circle,
+    rgba(48, 9, 20, 0.3) 0%,
+    rgba(102, 102, 102, 0.15) 24%,
+    rgba(255, 247, 247, 0) 67%
+  );
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+/* ── Box scene ─────────────────────────────────────── */
+
+#box-scene {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 900px;
+  z-index: 1;
+}
+
+.box-wrapper {
+  position: absolute;
+  width: 230px;
+  height: 340px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+#box {
+  position: relative;
+  width: 230px; /* card width + side strip */
+  height: 340px;
+  transform-style: preserve-3d;
+}
+
+.face {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+}
+
+.front,
+.back {
+  width: 220px;
+  height: 340px;
+  background: linear-gradient(135deg, var(--box-front), #1f83ee);
+  box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.08);
+}
+.front {
+  transform: translateZ(60px);
+  background-image: url(../assets/box/box-front.svg);
+  background-position: center;
+  background-size: cover;
+}
+.back {
+  transform: translateZ(-60px) rotateY(180deg);
+  background-image: url(../assets/box/box-back.svg);
+  background-position: center;
+  background-size: cover;
+}
+.right,
+.left {
+  width: 120px;
+  height: 340px;
+  left: 50px;
+  top: 0;
+  background: linear-gradient(135deg, var(--box-side), #0f60b7);
+}
+.right {
+  transform: rotateY(90deg) translateZ(110px);
+  background-image: url(../assets/box/box-left.svg);
+  background-position: center;
+  background-size: cover;
+}
+.left {
+  transform: rotateY(-90deg) translateZ(110px);
+  background-image: url(../assets/box/box-right.svg);
+  background-position: center;
+  background-size: cover;
+}
+.top,
+.bottom {
+  width: 220px;
+  height: 120px;
+  left: 0;
+  top: 100px;
+  background: linear-gradient(135deg, var(--box-top), #0959ae);
+}
+.top {
+  transform: rotateX(90deg) translateZ(160px);
+  background-image: url(../assets/box/box-top.svg);
+  background-position: center;
+  background-size: cover;
+}
+.bottom {
+  transform: rotateX(-90deg) translateZ(180px);
+  background-image: url(../assets/box/box-bottom.svg);
+  background-position: center;
+  background-size: cover;
+}
+
+/* ── Cards scene ───────────────────────────────────── */
+
+#cards-scene {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 55px;
+  z-index: 1;
+}
+
+.card-wrapper {
+  transform-origin: bottom center;
+  position: relative;
+}
+
+.card-wrapper + .card-wrapper {
+  margin-left: -20px;
+}
+
+.card {
+  width: 193px;
+  height: 300px;
+  perspective: 700px;
+  cursor: pointer;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.card-face,
+.card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 9px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card-face {
+  background: #f9f9f9;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+}
+
+.card-back {
+  background: #f9f9f9;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transform: rotateY(180deg);
+  overflow: hidden;
+}
+
+.card-back-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: url("../assets/cards/back.svg");
+  background-position: center;
+  background-size: cover;
+}
+
+/* ── Hint ──────────────────────────────────────────── */
+
+#hint {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: rgba(18, 18, 18, 0.788);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+  white-space: nowrap;
+  z-index: 2;
+}

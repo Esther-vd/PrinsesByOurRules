@@ -1,0 +1,30 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mystery Box</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Box scene -->
+    <div id="box-scene">
+      <div id="box-wrapper" class="box-wrapper">
+        <div id="box" class="box">
+          <div id="box-body" class="face front"></div>
+          <div class="face right"></div>
+          <div class="face left"></div>
+          <div id="box-lid" class="face top"></div>
+          <div class="face bottom"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards scene (built by JS) -->
+    <div id="cards-scene"></div>
+
+    <!-- Hint -->
+    <div id="hint">Click to reveal</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="script/script.js"></script>
+  </body>
+</html>
