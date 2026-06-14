@@ -30,6 +30,16 @@ body {
     rgba(255, 247, 247, 0) 67%
   );
   font-family: Helvetica, Arial, sans-serif;
+  color: #2b2b2b;
+  font-size: 0.75rem;
+}
+
+h1 {
+  font-family: "HVD Poster Clean";
+  font-size: 12rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 /* ── Box scene ─────────────────────────────────────── */
@@ -42,6 +52,7 @@ body {
   justify-content: center;
   perspective: 900px;
   z-index: 1;
+  flex-flow: column nowrap;
 }
 
 .box-wrapper {
@@ -127,6 +138,77 @@ body {
   background-size: cover;
 }
 
+/* ── General styling of the box scene ──────────────────────────────────────────── */
+.flagbar {
+  background-color: rgba(43, 43, 43, 0.8);
+  align-items: center;
+  padding: 0.4rem 1.5rem;
+  border-radius: 0.3rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  position: relative;
+  margin: 1.5rem 0.5rem;
+  text-wrap: nowrap;
+  z-index: -100;
+  margin-bottom: 35rem;
+}
+
+.flagbar:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: rgba(43, 43, 43, 0.8);
+  border-bottom: 0;
+  margin-left: -10px;
+  margin-bottom: -10px;
+}
+
+.flagbar--up:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  top: auto;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: rgba(43, 43, 43, 0.8);
+  border-bottom: 0;
+  margin-left: -10px;
+  margin-bottom: -10px;
+}
+
+.flagbar__text {
+  color: #f9f9f9;
+  font-size: var(--fs-sm);
+}
+
+.logo {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.subtitle-container {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row;
+  gap: 0.5rem;
+}
+
+.box-scene__text {
+  position: fixed;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  text-wrap: nowrap;
+  z-index: -100;
+}
+
 /* ── Cards scene ───────────────────────────────────── */
 
 #cards-scene {
@@ -173,8 +255,7 @@ body {
 
 .card-face {
   background: #f9f9f9;
-  box-shadow:
-   var(--shadow);
+  box-shadow: var(--shadow);
   overflow: hidden;
   background-position: center;
   background-size: cover;
@@ -199,9 +280,9 @@ body {
 
 #hint {
   position: fixed;
-  bottom: 28px;
+  bottom: 1.75rem;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(-50%);
   text-align: center;
   color: rgba(18, 18, 18, 0.788);
   font-size: 10px;
