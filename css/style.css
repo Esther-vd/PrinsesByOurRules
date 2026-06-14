@@ -174,8 +174,7 @@ body {
 .card-face {
   background: #f9f9f9;
   box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+   var(--shadow);
   overflow: hidden;
   background-position: center;
   background-size: cover;
@@ -183,7 +182,7 @@ body {
 
 .card-back {
   background: #f9f9f9;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--shadow);
   transform: rotateY(180deg);
   overflow: hidden;
 }
