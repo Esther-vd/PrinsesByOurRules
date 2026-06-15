@@ -13,6 +13,7 @@ let boxParallexEffect;
 
 /* ── Hint ──────────────────────────────────────────────────────── */
 const hintAppear = () => {
+  document.getElementById("hint").textContent = "Click to reveal"
   gsap.to("#hint", {
     opacity: 1,
     duration: 0.7,
