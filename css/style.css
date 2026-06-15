@@ -75,7 +75,7 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  backface-visibility: hidden;
+  backface-visibility:hidden;
 }
 
 .front,
@@ -107,13 +107,13 @@ h1 {
 }
 .right {
   transform: rotateY(90deg) translateZ(110px);
-  background-image: url(../assets/box/box-left.svg);
+  background-image: linear-gradient(304deg,rgba(163, 67, 101, 0.45) 0%, rgba(191, 143, 159, 0) 72%, rgba(255, 247, 247, 0) 96%), url(../assets/box/box-left.svg);
   background-position: center;
   background-size: cover;
 }
 .left {
   transform: rotateY(-90deg) translateZ(110px);
-  background-image: url(../assets/box/box-right.svg);
+  background-image: linear-gradient(304deg,rgba(163, 67, 101, 0.45) 0%, rgba(191, 143, 159, 0) 72%, rgba(255, 247, 247, 0) 96%), url(../assets/box/box-right.svg);
   background-position: center;
   background-size: cover;
 }
@@ -133,7 +133,7 @@ h1 {
 }
 .bottom {
   transform: rotateX(-90deg) translateZ(180px);
-  background-image: url(../assets/box/box-bottom.svg);
+  background-image: linear-gradient(356deg,rgba(163, 67, 101, 0.45) 0%, rgba(191, 143, 159, 0) 72%, rgba(255, 247, 247, 0) 96%), url(../assets/box/box-bottom.svg);
   background-position: center;
   background-size: cover;
 }
