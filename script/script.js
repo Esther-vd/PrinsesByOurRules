@@ -77,7 +77,6 @@ const handleOpenBox = () => {
       rotateX: -45,
       duration: 0.78,
       ease: "power2.inOut",
-      transformOrigin: "bottom center",
     },
     0.18,
   );
@@ -124,14 +123,24 @@ const handleOpenBox = () => {
         hint.textContent = "Click a card to flip it";
         gsap.to(hint, { opacity: 1, duration: 0.6 });
       });
+
+      gsap.to(backBtn, {
+        opacity: 1,
+        duration: 0.3,
+        delay: 0.5,
+        onStart: () => backBtn.classList.add("visible"),
+      });
     },
     null,
     1.22,
   );
+
+  BackBtnCloseBox();
 };
 
 /* ── Build card DOM ────────────────────────────────────────────── */
 const cardsScene = document.getElementById("cards-scene");
+const backBtn = document.getElementById("backBtn");
 
 const BuildCardDeck = () => {
   for (let i = 0; i < CARDS.length; i++) {
@@ -178,74 +187,153 @@ const BuildCardDeck = () => {
         break;
     }
   }
-  console.log(CARDS);
   BuildCardDOM();
 };
 
 const BuildCardDOM = () => {
- CARDS.forEach((card, i) => {
-   const wrapper = document.createElement("div");
-   wrapper.className = "card-wrapper";
-   wrapper.style.zIndex = BASE_Z[i];
+  CARDS.forEach((card, i) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "card-wrapper";
+    wrapper.style.zIndex = BASE_Z[i];
 
-   var cardEl = document.createElement("div");
-   cardEl.className = "card";
+    var cardEl = document.createElement("div");
+    cardEl.className = "card";
 
-   var inner = document.createElement("div");
-   inner.className = "card-inner";
+    var inner = document.createElement("div");
+    inner.className = "card-inner";
 
-   /* front */
-   var face = document.createElement("div");
-   face.className = "card-face";
-   face.style.backgroundImage =`url(assets/cards/${card.colour}/${card.design}.svg)`;
+    /* front */
+    var face = document.createElement("div");
+    face.className = "card-face";
+    face.style.backgroundImage = `url(assets/cards/${card.colour}/${card.design}.svg)`;
 
-   /* back */
-   var back = document.createElement("div");
-   back.className = "card-back";
-   back.innerHTML = '<div class="card-back-pattern"></div>';
+    /* back */
+    var back = document.createElement("div");
+    back.className = "card-back";
+    back.innerHTML = '<div class="card-back-pattern"></div>';
 
-   inner.appendChild(face);
-   inner.appendChild(back);
-   cardEl.appendChild(inner);
-   wrapper.appendChild(cardEl);
-   cardsScene.appendChild(wrapper);
+    inner.appendChild(face);
+    inner.appendChild(back);
+    cardEl.appendChild(inner);
+    wrapper.appendChild(cardEl);
+    cardsScene.appendChild(wrapper);
 
-   /* fix arc rotation (never changes) */
-   gsap.set(wrapper, { rotation: card.rot });
+    /* fix arc rotation (never changes) */
+    gsap.set(wrapper, { rotation: card.rot });
 
-   /* hover — float up */
-   cardEl.addEventListener("mouseenter", function () {
-     gsap.to(wrapper, {
-       y: card.yOff - 26,
-       duration: 0.32,
-       ease: "power2.out",
-       overwrite: "auto",
-     });
-   });
-   cardEl.addEventListener("mouseleave", function () {
-     gsap.to(wrapper, {
-       y: card.yOff,
-       duration: 0.42,
-       ease: "power2.inOut",
-       overwrite: "auto",
-     });
-   });
+    /* hover — float up */
+    cardEl.addEventListener("mouseenter", function () {
+      gsap.to(wrapper, {
+        y: card.yOff - 26,
+        duration: 0.32,
+        ease: "power2.out",
+        overwrite: "auto",
+      });
+    });
+    cardEl.addEventListener("mouseleave", function () {
+      gsap.to(wrapper, {
+        y: card.yOff,
+        duration: 0.42,
+        ease: "power2.inOut",
+        overwrite: "auto",
+      });
+    });
 
-   /* click — flip */
-   (function (idx, innerEl) {
-     cardEl.addEventListener("click", function () {
-       flipped[idx] = !flipped[idx];
-       gsap.to(innerEl, {
-         rotateY: flipped[idx] ? 180 : 0,
-         duration: 0.55,
-         ease: "power2.inOut",
-       });
-     });
-   })(i, inner);
- });
-}
+    /* click — flip */
+    (function (idx, innerEl) {
+      cardEl.addEventListener("click", function () {
+        flipped[idx] = !flipped[idx];
+        gsap.to(innerEl, {
+          rotateY: flipped[idx] ? 180 : 0,
+          duration: 0.55,
+          ease: "power2.inOut",
+        });
+      });
+    })(i, inner);
+  });
+};
 
 
+const RemoveCardDOM = () => {
+  cardsScene.innerHTML = '';
+};
+
+/* ---------- Back button: close cards, reopen box ---------- */
+const BackBtnCloseBox = () => {
+  backBtn.addEventListener("click", handleCLickBackBtn);
+};
+
+const handleCLickBackBtn = () => {
+  if (!opened) return;
+  opened = false;
+
+  const tl = gsap.timeline();
+  backBtn.removeEventListener("click", handleCLickBackBtn);
+  
+  tl.to(
+    backBtn,
+    {
+      opacity: 0,
+      duration: 0.3,
+      onStart: () => backBtn.classList.remove("visible"),
+    },
+    "<",
+  );
+
+  /* 1 — exit cards */
+  var wrappers = cardsScene.querySelectorAll(".card-wrapper");
+  wrappers.forEach(function (w, i) {
+    tl.to(
+      w,
+      {
+        y: 170,
+        opacity: 0,
+        scale: 0.72,
+        duration: 0.5,
+        delay: i * 0.05,
+        ease: "back.in(1.5)",
+      },
+      "<",
+    );
+  });
+
+  var hint = document.getElementById("hint");
+  tl.to(hint, { opacity: 0, duration: 0.3 });
+
+  /* 2 — enter box */
+  tl.to(
+    "#box-scene",
+    {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      filter: "blur(0px)",
+      duration: 0.46,
+      ease: "power2.inOut",
+      onStart: () => {
+        document.getElementById("box-scene").style.display = "flex";
+      },
+    },
+    ">-.6"
+  );
+  /* 2 — swing lid closed */
+  tl.to(
+    "#box-lid",
+    {
+      rotateX: 90,
+      duration: 0.78,
+      ease: "power2.inOut",
+      onComplete: () => {
+        cardsScene.style.display = "none";
+        parallaxEffect();
+        hintAppear();
+        RemoveCardDOM();
+        BuildCardDeck();
+      },
+    },
+    ">-.6",
+  );
+};
 
 /* ── run sequence ─────────────────────────────────────────── */
 const init = () => {

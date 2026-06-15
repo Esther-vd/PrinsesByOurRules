@@ -293,3 +293,32 @@ h1 {
   white-space: nowrap;
   z-index: 2;
 }
+
+/* ---------- BACK BUTTON ---------- */
+  .back-btn{
+    position:absolute;
+    top:1.75rem;
+    left:50%;
+    transform:translateX(-50%);
+    padding:10px 28px;
+    font-size:14px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--gold);
+    background:rgba(255,255,255,0.05);
+    border:2px solid var(--gold);
+    border-radius:30px;
+    cursor:pointer;
+    opacity:0;
+    pointer-events:none;
+    transition: background 0.25s, color 0.25s;
+    font-family:inherit;
+    z-index: 100;
+  }
+  .back-btn:hover{
+    background:var(--gold);
+    color:#222;
+  }
+  .back-btn.visible{
+    pointer-events:auto;
+  }
